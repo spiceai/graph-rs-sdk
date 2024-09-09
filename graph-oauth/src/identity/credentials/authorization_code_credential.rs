@@ -93,8 +93,8 @@ impl AuthorizationCodeCredential {
         client_secret: impl AsRef<str>,
         authorization_code: impl AsRef<str>,
         redirect_uri: Url,
-    ) -> IdentityResult<AuthorizationCodeCredential> {
-        Ok(AuthorizationCodeCredential {
+    ) -> AuthorizationCodeCredential {
+        AuthorizationCodeCredential {
             app_config: AppConfigBuilder::new(client_id.as_ref())
                 .tenant(tenant_id.as_ref())
                 .redirect_uri(redirect_uri)
@@ -104,7 +104,7 @@ impl AuthorizationCodeCredential {
             client_secret: client_secret.as_ref().to_owned(),
             code_verifier: None,
             token_cache: Default::default(),
-        })
+        }
     }
 
     pub fn with_refresh_token<T: AsRef<str>>(&mut self, refresh_token: T) {
@@ -385,10 +385,6 @@ impl TokenCredentialExecutor for AuthorizationCodeCredential {
         let client_id = self.app_config.client_id.to_string();
         if client_id.is_empty() || self.app_config.client_id.is_nil() {
             return AF::result(AuthParameter::ClientId.alias());
-        }
-
-        if self.client_secret.trim().is_empty() {
-            return AF::result(AuthParameter::ClientSecret.alias());
         }
 
         serializer
