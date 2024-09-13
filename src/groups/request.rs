@@ -1,6 +1,7 @@
 // GENERATED CODE
 
 use crate::api_default_imports::*;
+use crate::default_drive::DefaultDriveApiClient;
 use crate::group_lifecycle_policies::*;
 use crate::groups::*;
 use crate::permission_grants::*;
