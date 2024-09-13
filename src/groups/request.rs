@@ -58,6 +58,7 @@ impl GroupsIdApiClient {
         members_with_license_errors_id,
         MembersWithLicenseErrorsIdApiClient
     );
+    api_client_link!(drive, DefaultDriveApiClient);
     api_client_link!(permission_grants, PermissionGrantsApiClient);
     api_client_link_id!(owner, GroupsOwnersIdApiClient);
     api_client_link!(transitive_members, TransitiveMembersApiClient);
