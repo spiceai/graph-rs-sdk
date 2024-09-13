@@ -1,6 +1,7 @@
 // GENERATED CODE
 
 use crate::api_default_imports::*;
+use crate::default_drive::DefaultDriveApiClient;
 use crate::group_lifecycle_policies::*;
 use crate::groups::*;
 use crate::permission_grants::*;
@@ -58,6 +59,7 @@ impl GroupsIdApiClient {
         members_with_license_errors_id,
         MembersWithLicenseErrorsIdApiClient
     );
+    api_client_link!(drive, DefaultDriveApiClient);
     api_client_link!(permission_grants, PermissionGrantsApiClient);
     api_client_link_id!(owner, GroupsOwnersIdApiClient);
     api_client_link!(transitive_members, TransitiveMembersApiClient);
