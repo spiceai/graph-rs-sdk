@@ -52,17 +52,17 @@ graph-core = { path = "./graph-core", version = "2.0.1", default-features=false 
 [features]
 default = ["native-tls"]
 native-tls = ["reqwest/native-tls", "graph-http/native-tls", "graph-oauth/native-tls", "graph-core/native-tls"]
-rustls-tls = ["reqwest/rustls-tls", "graph-http/rustls-tls", "graph-oauth/rustls-tls", "graph-core/rustls-tls"]
+rustls-tls = ["reqwest/rustls", "graph-http/rustls-tls", "graph-oauth/rustls-tls", "graph-core/rustls-tls"]
 brotli = ["reqwest/brotli", "graph-http/brotli", "graph-oauth/brotli", "graph-core/brotli"]
 deflate = ["reqwest/deflate", "graph-http/deflate", "graph-oauth/deflate", "graph-core/deflate"]
-trust-dns = ["reqwest/trust-dns", "graph-http/trust-dns", "graph-oauth/trust-dns", "graph-core/trust-dns"]
+trust-dns = ["reqwest/hickory-dns", "graph-http/trust-dns", "graph-oauth/trust-dns", "graph-core/trust-dns"]
 socks = ["reqwest/socks", "graph-http/socks", "graph-oauth/socks", "graph-core/socks"]
 openssl = ["graph-oauth/openssl"]
 interactive-auth = ["graph-oauth/interactive-auth"]
 test-util = ["graph-http/test-util"]
 
 [workspace.dependencies]
-reqwest = { version = "0.12", default-features = false}
+reqwest = { version = "0.13", default-features = false}
 http = { version = "1", default-features = false }
 
 [dev-dependencies]
