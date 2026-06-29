@@ -26,7 +26,7 @@ http = { workspace = true }
 jsonwebtoken = "9.1.0"
 lazy_static = "1.4.0"
 openssl = { version = "0.10", optional=true }
-reqwest = { workspace = true, default-features=false, features = ["json", "gzip", "blocking", "stream"] }
+reqwest = { workspace = true, default-features=false, features = ["json", "gzip", "blocking", "stream", "form"] }
 serde = { version = "1", features = ["derive"] }
 serde-aux = "4.1.2"
 serde_json = "1"
@@ -46,10 +46,10 @@ graph-core = { path = "../graph-core", default-features = false }
 [features]
 default = ["native-tls"]
 native-tls = ["reqwest/native-tls", "graph-core/native-tls"]
-rustls-tls = ["reqwest/rustls-tls", "graph-core/rustls-tls"]
+rustls-tls = ["reqwest/rustls", "graph-core/rustls-tls"]
 brotli = ["reqwest/brotli", "graph-core/brotli"]
 deflate = ["reqwest/deflate", "graph-core/deflate"]
-trust-dns = ["reqwest/trust-dns", "graph-core/trust-dns"]
+trust-dns = ["reqwest/hickory-dns", "graph-core/trust-dns"]
 socks = ["reqwest/socks", "graph-core/socks"]
 openssl = ["dep:openssl"]
 interactive-auth = ["dep:wry", "dep:tao"]
