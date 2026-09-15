@@ -18,7 +18,7 @@ futures = "0.3"
 handlebars = "2.0.2"
 http-serde = "1"
 http = { workspace = true }
-jsonwebtoken = "9.1.0"
+jsonwebtoken = { version = "10.3.0", features = ["aws_lc_rs"] }
 reqwest = { workspace = true, default-features=false, features = ["json", "gzip", "blocking", "stream"] }
 ring = "0.17"
 serde = { version = "1", features = ["derive"] }
