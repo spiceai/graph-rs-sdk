@@ -248,3 +248,64 @@ impl FromStr for IdToken {
         deserialize_result
     }
 }
+
+#[cfg(test)]
+mod jwt_v10_tests {
+    use super::*;
+    use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header};
+    use serde_json::json;
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    const TEST_SECRET: &[u8] = b"graph-rs-sdk-jsonwebtoken-v10-compatibility";
+
+    #[test]
+    fn decodes_a_valid_token_with_the_configured_crypto_backend() {
+        let exp = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .expect("current time is after the Unix epoch")
+            .as_secs()
+            + 60;
+        let token = encode(
+            &Header::new(Algorithm::HS256),
+            &json!({ "exp": exp }),
+            &EncodingKey::from_secret(TEST_SECRET),
+        )
+        .expect("test token encodes");
+
+        let id_token = IdToken::new(&token, None, None, None);
+        assert_eq!(
+            id_token.decode_header().expect("header decodes").alg,
+            Algorithm::HS256
+        );
+        decode::<serde_json::Value>(
+            &token,
+            &DecodingKey::from_secret(TEST_SECRET),
+            &Validation::new(Algorithm::HS256),
+        )
+        .expect("valid token decodes");
+    }
+
+    #[test]
+    fn rejects_a_non_numeric_expiration_claim() {
+        let token = encode(
+            &Header::new(Algorithm::HS256),
+            &json!({ "exp": "not-a-timestamp" }),
+            &EncodingKey::from_secret(TEST_SECRET),
+        )
+        .expect("test token encodes");
+
+        let mut validation = Validation::new(Algorithm::HS256);
+        validation.required_spec_claims.clear();
+        let error = decode::<serde_json::Value>(
+            &token,
+            &DecodingKey::from_secret(TEST_SECRET),
+            &validation,
+        )
+        .expect_err("a malformed expiration claim must be rejected");
+
+        assert!(matches!(
+            error.kind(),
+            JwtErrors::ErrorKind::InvalidClaimFormat(claim) if claim == "exp"
+        ));
+    }
+}

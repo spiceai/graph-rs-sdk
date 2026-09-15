@@ -23,7 +23,7 @@ base64 = "0.21.0"
 dyn-clone = "1.0.14"
 hex = "0.4.3"
 http = { workspace = true }
-jsonwebtoken = "9.1.0"
+jsonwebtoken = { version = "10.3.0", features = ["aws_lc_rs"] }
 lazy_static = "1.4.0"
 openssl = { version = "0.10", optional=true }
 reqwest = { workspace = true, default-features=false, features = ["json", "gzip", "blocking", "stream", "form"] }
